@@ -9,12 +9,23 @@ logging:
 spring:
   application:
     name: AuthorizationServer
+
+  jpa:
+    hibernate.ddl-auto: create
+    show-sql: true
+
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/auth_server_app_db
+    username: auth_server_app_db_user
+    password: mysql@18Rajat
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
   security:
     user:
       name: user
       password: password
     oauth2:
-      authorizationserver:
+      authorizationServer:
         client:
           oidc-client:
             registration:
