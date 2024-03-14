@@ -11,7 +11,7 @@ spring:
     name: AuthorizationServer
 
   jpa:
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: validate
     show-sql: true
 
   datasource:

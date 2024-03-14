@@ -12,5 +12,8 @@
    9. authorizationServerSecurityFilterChain
 10. Add MySQL Configuration
 11. Use JPA Repository to store Client
+    12. Data Models
+    13. JPA Entities and Repos
+    14. Implement Core Services
 12. Create API or Test Case to create ans store a client- POSTMAN
 13. 
