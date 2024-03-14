@@ -1,13 +1,15 @@
 package com.scaler.project.authorizationserver.security.repository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scaler.project.authorizationserver.security.models.Client;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2AuthorizationServerJackson2Module;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.stereotype.Component;
@@ -22,12 +24,16 @@ import java.util.Set;
 @Component
 public class JpaRegisteredClientRepository implements RegisteredClientRepository {
     private final ClientRepository clientRepository;
-    private final ObjectMapper objectMapper = new Jackson2ObjectMapperBuilder().build();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public JpaRegisteredClientRepository(ClientRepository clientRepository) {
         Assert.notNull(clientRepository, "clientRepository cannot be null");
         this.clientRepository = clientRepository;
 
+        ClassLoader classLoader = JpaRegisteredClientRepository.class.getClassLoader();
+        List<Module> securityModules = SecurityJackson2Modules.getModules(classLoader);
+        this.objectMapper.registerModules(securityModules);
+        this.objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
     }
 
     @Override
