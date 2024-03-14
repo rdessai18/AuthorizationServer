@@ -17,6 +17,9 @@ public class AuthorizationConsent {
     private String registeredClientId;
     @Id
     private String principalName;
+
+    @Column(length = 1000)
+    @Lob
     private String authorities;
 
 

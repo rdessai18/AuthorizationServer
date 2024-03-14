@@ -24,23 +24,23 @@ spring:
     user:
       name: user
       password: password
-    oauth2:
-      authorizationServer:
-        client:
-          oidc-client:
-            registration:
-              client-id: "oidc-client"
-              client-secret: "{noop}secret"
-              client-authentication-methods:
-                - "client_secret_basic"
-              authorization-grant-types:
-                - "authorization_code"
-                - "refresh_token"
-              redirect-uris:
-                - "http://127.0.0.1:8080/login/oauth2/code/oidc-client"
-              post-logout-redirect-uris:
-                - "http://127.0.0.1:8080/"
-              scopes:
-                - "openid"
-                - "profile"
-            require-authorization-consent: true
+#    oauth2:
+#      authorizationServer:
+#        client:
+#          oidc-client:
+#            registration:
+#              client-id: "oidc-client"
+#              client-secret: "$2a$15$/fakG2indFgjkOL0k2fET.kyhK/QbNSWhYIeFKeK2vc5nuqJAOhwe"
+#              client-authentication-methods:
+#                - "client_secret_basic"
+#              authorization-grant-types:
+#                - "authorization_code"
+#                - "refresh_token"
+#              redirect-uris:
+#                - "https://oauth.pstmn.io/v1/callbackt"
+#              post-logout-redirect-uris:
+#                - "https://oauth.pstmn.io/v1/callback"
+#              scopes:
+#                - "openid"
+#                - "profile"
+#            require-authorization-consent: true
