@@ -1,13 +1,19 @@
 package com.scaler.project.authorizationserver.security.config;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,6 +28,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
+import org.springframework.web.client.RestTemplate;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -40,6 +47,8 @@ public class SecurityConfig {
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 .oidc(Customizer.withDefaults());	// Enable OpenID Connect 1.0
         http
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable())
                 // Redirect to the login page when not authenticated from the
                 // authorization endpoint
                 .exceptionHandling((exceptions) -> exceptions
@@ -70,6 +79,7 @@ public class SecurityConfig {
     }
 
     @Bean
+    @Primary
     public UserDetailsService userDetailsService() {
         UserDetails userDetails = User.withDefaultPasswordEncoder()
                 .username("user")
@@ -133,6 +143,20 @@ public class SecurityConfig {
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder().build();
+    }
+
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplateBuilder().build();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper(){
+        return new Jackson2ObjectMapperBuilder()
+                .serializationInclusion(JsonInclude.Include.NON_NULL)
+                .build()
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+
     }
 
 }

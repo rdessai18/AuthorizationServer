@@ -1,4 +1,11 @@
 # AuthorizationServer
+## Core Components
+1. RegisteredClientRepository
+2. Authorization Service
+3. Consent Service
+4. JWK Source
+5. Provider Setting
+6. Server Configuration
 
 ## Default Configurations
 1. properties

@@ -23,7 +23,7 @@ class JpaRegisteredClientRepositoryTest {
     public void test() {
         RegisteredClient oidcClient = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("oidc-client")
-                .clientSecret("$2a$15$/fakG2indFgjkOL0k2fET.kyhK/QbNSWhYIeFKeK2vc5nuqJAOhwe")
+                .clientSecret("$2a$16$FHmhRERimbz8tHOxdzxsYO4J7avLVJkGLMjFs1xeZ4Mo53DjIG0AS")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
